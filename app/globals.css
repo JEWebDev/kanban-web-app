@@ -1,26 +1,117 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-light-grey-bg: #f4f7fd;
+  --color-lines-light: #e4ebfa;
+  --color-medium-grey: #828fa3;
+  --color-lines-dark: #3e3fae;
+  --color-dark-grey-bg: #2b2c37;
+  --color-black: #000112;
+  --color-main-purple: #635fc7;
+  --color-main-purple-hover: #a8a4ff;
+  --color-red: #ea5555;
+  --color-red-hover: #ff9898;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+@utility heading-xl {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+@utility heading-l {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 23px;
+}
+
+@utility heading-m {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+@utility heading-s {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 2.4px;
+}
+
+@utility body-m {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 23px;
+}
+
+@utility body-s {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+@utility button {
+  padding: 15px 0;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  background-color: var(--color-main-purple);
+  color: white;
+  border-radius: 24px;
+  max-width: 255px;
+
+  &:hover {
+    background-color: var(--color-main-purple-hover);
+    cursor: pointer;
+  }
+  &:disabled {
+    background-color: var(--color-medium-grey);
+    cursor: not-allowed;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility button-small {
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #635fc71a;
+  color: var(--color-main-purple);
+  border-radius: 20px;
+  max-width: 255px;
+
+  &:hover {
+    background-color: #635fc740;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    background-color: #635fc71a;
+    color: var(--color-medium-grey);
+    cursor: not-allowed;
+  }
+}
+
+@utility label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-medium-grey);
+}
+
+@utility text-input {
+  max-height: 40px;
+  max-width: 350px;
+  padding: 9px 16px;
+  border: 1px solid var(--color-lines-light);
+  border-radius: 4px;
+  color: black;
+}
+
+@utility error {
+  border: 1px solid var(--color-red);
 }
