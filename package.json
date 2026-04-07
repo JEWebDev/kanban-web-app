@@ -14,7 +14,8 @@
     "next": "16.2.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "zod": "4.3.6"
+    "zod": "4.3.6",
+    "zustand": "5.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4",
@@ -27,7 +28,7 @@
     "eslint-config-next": "16.2.2",
     "tailwindcss": "4",
     "typescript": "5",
-    "vitest": "^4.1.2"
+    "vitest": "4.1.2"
   },
   "ignoreScripts": [
     "sharp",
