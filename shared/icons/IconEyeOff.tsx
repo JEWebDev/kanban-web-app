@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-function IconHideSidebar(props: SVGProps<SVGSVGElement>) {
+function IconEyeOff(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} viewBox="0 0 18 16">
       <path
@@ -10,4 +10,4 @@ function IconHideSidebar(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-export default IconHideSidebar;
+export default IconEyeOff;
