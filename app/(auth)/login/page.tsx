@@ -30,11 +30,10 @@ export function LoginPage() {
       </p>
 
       <form className="w-full flex flex-col gap-4">
-        <TextInput label={"Email Address"} name={"email"} type={"text"} />
+        <TextInput label={"Email Address"} name={"email"} />
         <TextInput
           label={"Password"}
           name={"password"}
-          type={"password"}
           isCapslockOn={isCapsLockOn}
         />
         <PrimaryButtonSmall type="submit">Login</PrimaryButtonSmall>

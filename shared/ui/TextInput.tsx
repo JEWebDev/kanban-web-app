@@ -7,7 +7,6 @@ import IconEyeOff from "../icons/IconEyeOff";
 interface TextInputProps {
   label: string;
   name: string;
-  type: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
@@ -20,7 +19,6 @@ function TextInput({
   label,
   name,
   value,
-  type,
   onChange,
   className,
   defaultValue,
@@ -56,7 +54,13 @@ function TextInput({
         id={name}
         name={name}
         // Switch types based on visibility state
-        type={type === "password" && isPasswordVisible ? "text" : type}
+        type={
+          name === "password" && isPasswordVisible
+            ? "text"
+            : name === "password"
+              ? "password"
+              : "text"
+        }
         value={value}
         onChange={onChange}
         className={`text-input body-m ${error ? "border-red-500" : ""} ${className ?? ""}`}
@@ -65,7 +69,7 @@ function TextInput({
       />
 
       {/* Caps Lock Indicator */}
-      {isCapslockOn && type === "password" && (
+      {isCapslockOn && name === "password" && (
         <IconCapsLock
           className="w-4 h-4 absolute right-12 top-9 pointer-events-none"
           aria-label="Caps lock"
@@ -73,7 +77,7 @@ function TextInput({
       )}
 
       {/* Password Toggle Button */}
-      {type === "password" && isFocused && (
+      {name === "password" && isFocused && (
         <button
           type="button" // Important: prevents form submission
           className="w-5 h-4 absolute right-4 top-9 hover:cursor-pointer flex items-center justify-center"
