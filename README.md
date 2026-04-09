@@ -6,7 +6,7 @@ Initial readme
 
 ### User Auth
 
-Initially, I only considered implementing login functionality using email and password. However, I realized that users would need to register first, which would require email verification.
+Initially, I only considered implementing login functionality using email and password. However, I realized that users would need to register first, which would require email verification, same for resetting password.
 
 After exploring Supabase's documentation, I discovered that while they provide an SMTP server, its capabilities are limited and do not meet the needs of this project. I considered alternative solutions, such as building a custom SMTP server, but most of these options required owning a domain to send verification emails to users, rather than a sandbox or personal email.
 

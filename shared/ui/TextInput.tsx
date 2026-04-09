@@ -29,7 +29,7 @@ function TextInput({
         type={type}
         value={value}
         onChange={onChange}
-        className={`text-input ${error ? "border-red-500" : ""} ${className ?? ""}`}
+        className={`text-input body-m ${error ? "border-red-500" : ""} ${className ?? ""}`}
         defaultValue={defaultValue}
       />
       {error && <span className="text-red-500">{error}</span>}
