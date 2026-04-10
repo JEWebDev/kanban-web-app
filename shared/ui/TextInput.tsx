@@ -8,11 +8,13 @@ interface TextInputProps {
   label: string;
   name: string;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
   defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  className?: string;
   isCapslockOn?: boolean;
   error?: string;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 function TextInput({
@@ -20,10 +22,12 @@ function TextInput({
   name,
   value,
   onChange,
+  onBlur,
   className,
   defaultValue,
   isCapslockOn,
   error,
+  ref,
 }: TextInputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -33,7 +37,7 @@ function TextInput({
     e.preventDefault();
     setIsPasswordVisible((prev) => !prev);
   };
-  const handleBlur = (e: React.FocusEvent) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     // If the new focus target is still inside this div, don't trigger blur
     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
       setIsFocused(false);
@@ -61,8 +65,10 @@ function TextInput({
               ? "password"
               : "text"
         }
+        ref={ref}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className={`text-input body-m ${error ? "border-red-500" : ""} ${className ?? ""}`}
         defaultValue={defaultValue}
         aria-invalid={!!error}
@@ -92,7 +98,11 @@ function TextInput({
         </button>
       )}
 
-      {error && <span className="text-red-500 text-xs mt-1">{error}</span>}
+      {error && (
+        <span className="text-red-500 text-xs absolute top-9 right-17">
+          {error}
+        </span>
+      )}
     </div>
   );
 }

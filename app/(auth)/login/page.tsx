@@ -3,24 +3,29 @@ import IconLogoDark from "@/shared/icons/IconLogoDark";
 import TextInput from "@/shared/ui/TextInput";
 import GithubButton from "@/shared/ui/GithubButton";
 import PrimaryButtonSmall from "@/shared/ui/PrimaryButtonSmall";
-import { useEffect, useState } from "react";
+import useCapsLock from "./services/useCapsLock";
+import useAuth from "./hooks/useAuth";
+import { useEffect, useRef } from "react";
 
 export function LoginPage() {
-  const [isCapsLockOn, setIsCapsLockOn] = useState(false);
+  const { isCapsLockOn } = useCapsLock();
+  const { handleLogin, errors, setErrors } = useAuth();
 
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleBlur = () => {
+    setErrors({ email: "", password: "" });
+  };
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.getModifierState("CapsLock")) {
-        setIsCapsLockOn(true);
-      } else {
-        setIsCapsLockOn(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+    if (errors?.email) {
+      emailRef.current?.focus();
+    }
+    if (errors?.password && passwordRef.current) {
+      passwordRef.current.value = "";
+    }
+  }, [errors?.email, errors?.password]);
+
   return (
     <div className="flex flex-col items-center gap-4">
       <IconLogoDark className="w-40 mb-2" />
@@ -29,12 +34,20 @@ export function LoginPage() {
         Please log in to continue.
       </p>
 
-      <form className="w-full flex flex-col gap-4">
-        <TextInput label={"Email Address"} name={"email"} />
+      <form className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
+        <TextInput
+          label={"Email Address"}
+          name={"email"}
+          error={errors?.email}
+          onBlur={handleBlur}
+          ref={emailRef}
+        />
         <TextInput
           label={"Password"}
           name={"password"}
           isCapslockOn={isCapsLockOn}
+          error={errors?.password}
+          ref={passwordRef}
         />
         <PrimaryButtonSmall type="submit">Login</PrimaryButtonSmall>
       </form>
