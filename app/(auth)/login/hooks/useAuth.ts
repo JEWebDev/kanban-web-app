@@ -64,7 +64,6 @@ function useAuth() {
 
       if (error) {
         console.error("Error al cerrar sesión:", error);
-        router.push("/login");
         return;
       }
       console.log("Logout success");
