@@ -6,6 +6,9 @@ import PrimaryButtonSmall from "@/shared/ui/PrimaryButtonSmall";
 import useCapsLock from "./services/useCapsLock";
 import useAuth from "./hooks/useAuth";
 import { useEffect, useRef } from "react";
+import { loginWithGithub } from "./services/auth";
+import { createClient } from "@/lib/supabase/client";
+import router from "next/router";
 
 export function LoginPage() {
   const { isCapsLockOn } = useCapsLock();
@@ -26,6 +29,19 @@ export function LoginPage() {
     }
   }, [errors?.email, errors?.password]);
 
+  useEffect(() => {
+    const handlePageShow = async (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        // La página fue restaurada desde bfcache
+        const supabase = createClient();
+        const { data } = await supabase.auth.getClaims();
+        if (data?.claims) router.replace("/boards");
+      }
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
   return (
     <div className="flex flex-col items-center gap-4">
       <IconLogoDark className="w-40 mb-2" />
@@ -53,7 +69,7 @@ export function LoginPage() {
       </form>
 
       <div className="w-full pt-6 pb-4 flex flex-col gap-4 border-t  border-lines-light">
-        <GithubButton />
+        <GithubButton onClick={loginWithGithub} />
       </div>
     </div>
   );
