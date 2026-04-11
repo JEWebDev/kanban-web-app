@@ -13,3 +13,11 @@ After exploring Supabase's documentation, I discovered that while they provide a
 #### Solution:
 
 To simplify the process, I decided to create a test user. This allows users to log in using the test account (email and password) or sign in using GitHub (OAuth). GitHub is a widely accepted standard, and this approach also provides an option for users who want to test the app without using their GitHub account.
+
+### User Auth flow
+
+Since **NextJs** uses SSR, transitioning from CSR with Vite + React presented challenges in deciding what to handle on the server versus the browser. Initially, I implemented login logic in the browser but encountered state refresh issues, including improper proxy protection for `/login` (blocking authenticated users) and `/boards` (blocking unauthenticated users).
+
+#### Solution:
+
+I moved the login logic to server actions and centralized redirection there. Client-side validation is complemented by server-side revalidation, adhering to the "Don't Trust the Client" principle. This ensures middleware activates immediately when actions are triggered, resolving the issues effectively.
