@@ -6,7 +6,7 @@ import PrimaryButtonSmall from "@/shared/ui/PrimaryButtonSmall";
 import useCapsLock from "./services/useCapsLock";
 import useAuth from "./hooks/useAuth";
 import { useEffect, useRef } from "react";
-import { loginWithGithub } from "./services/auth";
+import { loginWithGithub } from "./actions";
 import { createClient } from "@/lib/supabase/client";
 import router from "next/router";
 

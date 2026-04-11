@@ -1,8 +1,6 @@
 "use client";
-import useAuth from "../(auth)/login/hooks/useAuth";
-
+import { logout } from "../(auth)/login/actions";
 function BoardContent() {
-  const { handleLogout: logout } = useAuth();
   return (
     <main>
       <h1>Here goes the board content, only logged users can see this page</h1>
