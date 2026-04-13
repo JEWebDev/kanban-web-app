@@ -1,5 +1,4 @@
 "use server";
-
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { LoginCredentials, LoginSchema } from "./schemas/login";
@@ -15,7 +14,8 @@ export async function loginWithPassword({ email, password }: LoginCredentials) {
     if (!validatedData.success) {
       const tree = z.treeifyError(validatedData.error);
       return {
-        error: tree?.properties?.email?.errors?.[0] || "Invalid input data.",
+        email: tree?.properties?.email?.errors?.[0] ?? "",
+        password: tree?.properties?.password?.errors?.[0] ?? "",
       };
     }
 
@@ -24,18 +24,21 @@ export async function loginWithPassword({ email, password }: LoginCredentials) {
     );
     if (error && error?.message?.includes("Invalid login credentials")) {
       return {
-        error: "Invalid email or password.",
+        email: "invalid email or password",
+        password: "invalid email or password",
       };
     }
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.log(error?.message);
-      return { error: error.message };
+      return { email: error.message, password: "" };
     } else {
-      return { error: "An unknown error occurred during login." };
+      return {
+        email: "An unknown error occurred during login.",
+        password: "",
+      };
     }
   }
-  redirect("/boards");
 }
 
 // OAuth login with Github function

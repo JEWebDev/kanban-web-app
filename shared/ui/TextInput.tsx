@@ -11,6 +11,7 @@ interface TextInputProps {
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   className?: string;
   isCapslockOn?: boolean;
   error?: string;
@@ -23,6 +24,7 @@ function TextInput({
   value,
   onChange,
   onBlur,
+  onFocus,
   className,
   defaultValue,
   isCapslockOn,
@@ -69,9 +71,11 @@ function TextInput({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onFocus={onFocus}
         className={`text-input body-m ${error ? "border-red-500" : ""} ${className ?? ""}`}
         defaultValue={defaultValue}
         aria-invalid={!!error}
+        aria-describedby={error ? `${name}-error` : undefined}
       />
 
       {/* Caps Lock Indicator */}
@@ -98,11 +102,14 @@ function TextInput({
         </button>
       )}
 
-      {error && (
-        <span className="text-red-500 text-xs absolute top-9 right-17">
-          {error}
-        </span>
-      )}
+      <span
+        id={`${name}-error`}
+        className={`text-red-500 text-xs absolute top-9 right-17 ${!error ? "sr-only" : ""}`}
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {error ? error : ""}
+      </span>
     </div>
   );
 }

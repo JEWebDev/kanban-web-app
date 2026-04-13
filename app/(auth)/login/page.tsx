@@ -3,45 +3,22 @@ import IconLogoDark from "@/shared/icons/IconLogoDark";
 import TextInput from "@/shared/ui/TextInput";
 import GithubButton from "@/shared/ui/GithubButton";
 import PrimaryButtonSmall from "@/shared/ui/PrimaryButtonSmall";
-import useCapsLock from "./services/useCapsLock";
-import useAuth from "./hooks/useAuth";
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 import { loginWithGithub } from "./actions";
-import { createClient } from "@/lib/supabase/client";
-import router from "next/router";
+import { useLoginForm } from "./hooks/useLoginForm";
 
 export function LoginPage() {
-  const { isCapsLockOn } = useCapsLock();
-  const { handleLogin, errors, setErrors } = useAuth();
+  const {
+    emailProps,
+    passwordProps,
+    onSubmit,
+    errors,
+    isPending,
+    isCapsLockOn,
+  } = useLoginForm();
 
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
-  const handleBlur = () => {
-    setErrors({ email: "", password: "" });
-  };
-  useEffect(() => {
-    if (errors?.email) {
-      emailRef.current?.focus();
-    }
-    if (errors?.password && passwordRef.current) {
-      passwordRef.current.value = "";
-    }
-  }, [errors?.email, errors?.password]);
-
-  useEffect(() => {
-    const handlePageShow = async (e: PageTransitionEvent) => {
-      if (e.persisted) {
-        // La página fue restaurada desde bfcache
-        const supabase = createClient();
-        const { data } = await supabase.auth.getClaims();
-        if (data?.claims) router.replace("/boards");
-      }
-    };
-
-    window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
-  }, []);
   return (
     <div className="flex flex-col items-center gap-4">
       <IconLogoDark className="w-40 mb-2" />
@@ -50,26 +27,31 @@ export function LoginPage() {
         Please log in to continue.
       </p>
 
-      <form className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
+      <form className="w-full flex flex-col gap-4" onSubmit={onSubmit}>
         <TextInput
           label={"Email Address"}
-          name={"email"}
-          error={errors?.email}
-          onBlur={handleBlur}
-          ref={emailRef}
+          error={errors.email?.message}
+          {...emailProps}
         />
         <TextInput
           label={"Password"}
-          name={"password"}
           isCapslockOn={isCapsLockOn}
-          error={errors?.password}
-          ref={passwordRef}
+          error={errors.password?.message}
+          {...passwordProps}
         />
-        <PrimaryButtonSmall type="submit">Login</PrimaryButtonSmall>
+        <PrimaryButtonSmall type="submit" disabled={isPending}>
+          {isPending ? "Logging in..." : "Login"}
+        </PrimaryButtonSmall>
       </form>
 
       <div className="w-full pt-6 pb-4 flex flex-col gap-4 border-t  border-lines-light">
-        <GithubButton onClick={loginWithGithub} />
+        <GithubButton
+          onClick={() => {
+            setIsRedirecting(true);
+            loginWithGithub();
+          }}
+          disabled={isRedirecting}
+        />
       </div>
     </div>
   );
