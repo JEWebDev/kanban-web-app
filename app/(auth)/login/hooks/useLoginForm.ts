@@ -31,6 +31,7 @@ export const useLoginForm = () => {
     ref: passwordRef,
     ...passwordRest
   } = register("password");
+
   const passwordProps = {
     ...passwordRest,
     ref: passwordRef,

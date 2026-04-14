@@ -1,4 +1,4 @@
-import Providers from "./login/hooks/QueryContext";
+import Providers from "../../shared/layout/QueryContext";
 export function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="px-4 flex h-screen items-center bg-light-grey-bg">
