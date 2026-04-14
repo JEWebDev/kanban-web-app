@@ -47,7 +47,7 @@ export const useLoginForm = () => {
           setValue("password", "");
           setFocus("email");
         } else {
-          router.push("/boards");
+          router.replace("/boards");
         }
       },
       onError: (error: unknown) => {

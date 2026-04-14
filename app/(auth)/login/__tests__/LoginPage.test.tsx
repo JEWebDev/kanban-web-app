@@ -4,16 +4,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LoginPage from "../page";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockLoginWithPassword, mockLoginWithGithub, mockPush } = vi.hoisted(
+const { mockLoginWithPassword, mockLoginWithGithub, mockReplace } = vi.hoisted(
   () => ({
     mockLoginWithPassword: vi.fn(),
     mockLoginWithGithub: vi.fn(),
-    mockPush: vi.fn(),
+    mockReplace: vi.fn(),
   }),
 );
 
 vi.mock("next/navigation", () => ({
-  useRouter: () => ({ push: mockPush }),
+  useRouter: () => ({ replace: mockReplace }),
 }));
 
 vi.mock("../actions", () => ({
@@ -73,6 +73,20 @@ describe("LoginPage", () => {
         { email: "user@example.com", password: "password123" },
         expect.anything(),
       );
+    });
+  });
+
+  it("redirects to /boards on successful login", async () => {
+    mockLoginWithPassword.mockResolvedValue({}); // Simulate success
+    renderLoginPage();
+    const user = userEvent.setup();
+
+    await user.type(screen.getByLabelText(/email address/i), "test@test.com");
+    await user.type(screen.getByLabelText(/password/i), "password123");
+    await user.click(screen.getByRole("button", { name: /^login$/i }));
+
+    await waitFor(() => {
+      expect(mockReplace).toHaveBeenCalledWith("/boards");
     });
   });
 });
