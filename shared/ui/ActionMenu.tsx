@@ -1,6 +1,6 @@
 "use client";
 import IconVerticalElipsis from "../icons/IconVerticalElipsis";
-import { useActionMenu } from "../layout/hooks/useActionMenu";
+import { useActionMenu } from "./hooks/useActionMenu";
 interface ActionMenuProps {
   className?: string;
   onDeleteClick: () => void;
