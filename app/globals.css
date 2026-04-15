@@ -1,12 +1,15 @@
 @import "tailwindcss";
 @import "@fontsource-variable/plus-jakarta-sans/wght.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-light-grey-bg: #f4f7fd;
   --color-lines-light: #e4ebfa;
   --color-medium-grey: #828fa3;
-  --color-lines-dark: #3e3fae;
+  --color-lines-dark: #3e3f4e;
   --color-dark-grey-bg: #2b2c37;
+  --color-very-dark-grey-bg: #20212c;
   --color-black: #000112;
   --color-main-purple: #635fc7;
   --color-main-purple-hover: #a8a4ff;
@@ -37,7 +40,7 @@ html {
 }
 
 @utility heading-s {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 16px;
   letter-spacing: 2.4px;

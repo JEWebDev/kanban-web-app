@@ -5,3 +5,8 @@ export interface ButtonProps {
   className?: string;
   disabled?: boolean;
 }
+export interface Board {
+  board_id: string;
+  name: string;
+  columns?: Column[];
+}
