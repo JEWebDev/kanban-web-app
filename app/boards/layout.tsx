@@ -1,5 +1,6 @@
 import Header from "@/shared/layout/Header";
 import Sidebar from "@/shared/layout/Sidebar";
+import ModalManager from "../../shared/layout/ModalManager";
 
 export function BoardLayout({ children }: { children: React.ReactNode }) {
   const sidebarIsOpen = true;
@@ -12,6 +13,7 @@ export function BoardLayout({ children }: { children: React.ReactNode }) {
       <main className="w-full h-full flex gap-6 overflow-x-auto overflow-y-hidden bg-light-grey-bg dark:bg-very-dark-grey-bg p-6">
         {children}
       </main>
+      <ModalManager />
     </div>
   );
 }

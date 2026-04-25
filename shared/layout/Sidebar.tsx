@@ -1,13 +1,13 @@
 "use client";
+import { useAllBoards } from "@/app/boards/useBoards";
 import IconEyeOff from "../icons/IconEyeOff";
 import BoardItem from "../ui/BoardItem";
 import ThemeSwitch from "../ui/ThemeSwitch";
+import IconBoard from "../icons/IconBoard";
+import { useModalManager } from "@/shared/layout/hooks/useModalManager";
 function Sidebar() {
-  const boards = [
-    { board_id: "asasdfr", name: "Platform Launch", columns: [] },
-    { board_id: "eqwerqa", name: "Marketing Plan", columns: [] },
-    { board_id: "zxcvbnm", name: "Roadmap", columns: [] },
-  ];
+  const { data: boards } = useAllBoards();
+  const { openModal } = useModalManager();
   return (
     <aside className="md:w-65 lg:w-75 bg-white dark:bg-dark-grey-bg pr-6 border-r border-lines-light dark:border-lines-dark hidden md:flex md:flex-col justify-between pt-5 pb-8">
       <div>
@@ -16,10 +16,18 @@ function Sidebar() {
         </p>
 
         <ul className="flex flex-col">
-          {boards.map((board) => (
+          {boards?.map((board) => (
             <BoardItem key={board.board_id} board={board} active={false} />
           ))}
         </ul>
+        <button
+          className="py-3.75 w-full pl-6  flex items-center gap-4 heading-m text-main-purple hover:cursor-pointer"
+          onClick={() => {
+            openModal("create-board");
+          }}
+        >
+          <IconBoard className="w-4 h-4 " />+ Create New Board
+        </button>
       </div>
 
       <div className="flex flex-col gap-2">

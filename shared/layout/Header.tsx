@@ -19,7 +19,10 @@ export function Header() {
       <h1 className="heading-l hidden md:block">Platform Launch</h1>
 
       <div className="flex gap-3 items-center ml-auto pr-4">
-        <PrimaryButton className=" w-12 h-8 flex md:w-full md:h-full md:px-6 md:py-3.5 items-center justify-center">
+        <PrimaryButton
+          disabled={true}
+          className=" w-12 h-8 flex md:w-full md:h-full md:px-6 md:py-3.5 items-center justify-center"
+        >
           <IconPlus className="w-4 h-4 md:hidden" />
           <span className="hidden md:inline">+ Add New Task</span>
         </PrimaryButton>

@@ -9,7 +9,7 @@ function SecondaryButtonSmall({
   return (
     <button
       type={type}
-      className={`button-small button-secondary hover:button-hover ${className ?? ""}`}
+      className={`button-small button-secondary hover:button-hover dark:bg-white dark:hover:bg-white ${className ?? ""}`}
       onClick={onClick}
     >
       {children}

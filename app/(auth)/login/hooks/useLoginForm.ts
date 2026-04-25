@@ -26,17 +26,7 @@ export const useLoginForm = () => {
 
   const emailProps = register("email");
 
-  const {
-    onBlur: passwordOnBlur,
-    ref: passwordRef,
-    ...passwordRest
-  } = register("password");
-
-  const passwordProps = {
-    ...passwordRest,
-    ref: passwordRef,
-    onBlur: passwordOnBlur,
-  };
+  const passwordProps = register("password");
 
   const onSubmit = handleSubmit((data) => {
     loginMutate(data, {

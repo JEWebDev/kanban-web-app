@@ -9,6 +9,7 @@ interface TextInputProps {
   name: string;
   value?: string;
   defaultValue?: string;
+  placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -22,6 +23,7 @@ function TextInput({
   label,
   name,
   value,
+  placeholder,
   onChange,
   onBlur,
   onFocus,
@@ -48,7 +50,7 @@ function TextInput({
 
   return (
     <div
-      className="flex flex-col gap-1.5 relative group"
+      className="flex flex-col flex-1 gap-1.5 relative group"
       onFocus={() => setIsFocused(true)}
       onBlur={handleBlur}
     >
@@ -72,8 +74,9 @@ function TextInput({
         onChange={onChange}
         onBlur={onBlur}
         onFocus={onFocus}
-        className={`text-input body-m ${error ? "border-red-500" : ""} ${className ?? ""}`}
+        className={`text-input body-m placeholder:body-m dark:text-white dark:border-lines-dark placeholder:text-black/25 dark:placeholder:text-white/25 ${error ? "border-red-500" : ""} ${className ?? ""}`}
         defaultValue={defaultValue}
+        placeholder={placeholder}
         aria-invalid={!!error}
         aria-describedby={error ? `${name}-error` : undefined}
       />
